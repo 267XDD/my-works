@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>江家轩 | 作品集</title>
+    <link href="https://fonts.googleapis.com/css2?family=Product+Sans:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --g-blue: #4285f4;
+            --g-red: #ea4335;
+            --g-yellow: #fbbc05;
+            --g-green: #34a853;
+            --g-gray: #5f6368;
+            --g-border: #dadce0;
+            --g-bg: #ffffff;
+            --g-surface: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            letter-spacing: -0.011em;
+            margin: 0;
+            background-color: var(--g-bg);
+            color: #202124;
+            transition: background-color 0.3s;
+        }
+
+        /* 顶部品牌条 */
+        .brand-line {
+            height: 4px;
+            display: flex;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1001;
+        }
+        .brand-line div { flex: 1; }
+
+        /* 导航栏 */
+        nav {
+            height: 64px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            padding: 0 24px;
+            border-bottom: 1px solid var(--g-border);
+            position: sticky;
+            top: 4px;
+            z-index: 1000;
+        }
+
+        .logo { 
+            font-size: 22px; 
+            font-weight: 500; 
+            letter-spacing: -0.5px;
+            cursor: pointer;
+        }
+        .logo span:nth-child(1) { color: var(--g-blue); }
+        .logo span:nth-child(2) { color: var(--g-red); }
+        .logo span:nth-child(3) { color: var(--g-yellow); }
+        .logo span:nth-child(4) { color: var(--g-blue); }
+        .logo span:nth-child(5) { color: var(--g-green); }
+        .logo span:nth-child(6) { color: var(--g-red); }
+
+        /* 核心展示区 */
+        .hero {
+            max-width: 800px;
+            margin: 80px auto 40px;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            letter-spacing: -1px;
+            color: #202124;
+        }
+
+
+        /* 药丸按钮组 */
+        .filter-group {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 60px;
+            flex-wrap: wrap;
+        }
+
+        .pill {
+            padding: 8px 24px;
+            border: 1px solid var(--g-border);
+            border-radius: 100px;
+            font-size: 14px;
+            color: var(--g-gray);
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            background: white;
+        }
+
+        .pill:hover {
+            background-color: #f1f3f4;
+            box-shadow: 0 1px 2px rgba(60,64,67,0.3);
+        }
+
+        .pill.active {
+            background-color: #e8f0fe;
+            color: var(--g-blue);
+            border-color: var(--g-blue);
+            font-weight: 500;
+        }
+
+        /* 作品集网格 */
+        .main-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px 100px;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        /* 卡片设计升级 */
+        .g-card {
+            background: white;
+            border: 1px solid var(--g-border);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: zoom-in; /* 提示用户可以点击放大 */
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .g-card:hover {
+            box-shadow: 0 4px 20px rgba(60,64,67,0.15);
+            transform: translateY(-4px);
+        }
+
+        .img-container {
+            width: 100%;
+            height: 240px;
+            background: #f1f3f4;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* 增加悬停提示文字 */
+        .img-container::after {
+            content: "点击查看原图";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            font-size: 12px;
+            text-align: center;
+            padding: 8px;
+            transform: translateY(100%);
+            transition: transform 0.3s;
+        }
+
+        .g-card:hover .img-container::after {
+            transform: translateY(0);
+        }
+
+        .g-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .g-card:hover img {
+            transform: scale(1.08);
+        }
+
+        .g-card-content {
+            padding: 24px;
+        }
+
+        .g-card-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--g-blue);
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            letter-spacing: 0.8px;
+        }
+
+        .g-card-title {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 12px;
+            color: #202124;
+        }
+
+        .g-card-desc {
+            font-size: 14px;
+            color: var(--g-gray);
+            line-height: 1.6;
+        }
+
+        /* ---------------- Lightbox 灯箱预览样式 ---------------- */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.98); /* 仿 Google Photos 的亮色预览 */
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            cursor: zoom-out;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .lightbox.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .lightbox-content {
+            max-width: 90vw;
+            max-height: 85vh;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            transform: scale(0.95);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            object-fit: contain;
+        }
+
+        .lightbox.active .lightbox-content {
+            transform: scale(1);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            width: 44px;
+            height: 44px;
+            background: #f1f3f4;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 24px;
+            color: var(--g-gray);
+            transition: background 0.2s;
+        }
+
+        .close-btn:hover { background: #e8eaed; color: #202124; }
+
+        /* ------------------------------------------------------- */
+
+        footer {
+            background: var(--g-surface);
+            padding: 60px 24px;
+            text-align: center;
+            border-top: 1px solid var(--g-border);
+        }
+
+        .footer-link {
+            color: var(--g-blue);
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .footer-link:hover { text-decoration: underline; }
+
+    </style>
+</head>
+<body>
+
+<div class="brand-line">
+    <div style="background: var(--g-blue);"></div>
+    <div style="background: var(--g-red);"></div>
+    <div style="background: var(--g-yellow);"></div>
+    <div style="background: var(--g-green);"></div>
+</div>
+
+<nav>
+    <div class="logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+        <span>J</span><span>i</span><span>a</span><span>n</span><span>g</span><span>.</span>
+    </div>
+    <div style="flex-grow: 1;"></div>
+    <div style="color: var(--g-gray); font-size: 13px; font-weight: 500;">3D Artist / Tech Enthusiast</div>
+</nav>
+
+<section class="hero">
+    <h1>作品集</h1>
+    <div class="filter-group">
+        <div class="pill active" data-filter="all">全部作品</div>
+        <div class="pill" data-filter="scene">场景渲染</div>
+        <div class="pill" data-filter="character">三渲二人物</div>
+        <div class="pill" data-filter="product">电商写实</div>
+    </div>
+</section>
+
+<div class="main-container">
+    <div class="portfolio-grid">
+        
+        <div class="g-card" data-category="scene" onclick="openLightbox('pic/scene/楼.png')">
+            <div class="img-container">
+                <img src="pic/scene/楼.png" alt="楼道">
+            </div>
+            <div class="g-card-content">
+                <div class="g-card-label">Environments</div>
+                <div class="g-card-title">怀旧楼道：叙事光影开发</div>
+                <div class="g-card-desc">探索老旧建筑在 Cycles 渲染器下的物理写实表现，通过脏迹节点增强叙事感。</div>
+            </div>
+        </div>
+
+        <div class="g-card" data-category="character" onclick="openLightbox('pic/character/02.png')">
+            <div class="img-container">
+                <img src="pic/character/02.png" alt="02">
+            </div>
+            <div class="g-card-content">
+                <div class="g-card-label" style="color: var(--g-red);">Characters</div>
+                <div class="g-card-title">《02》三渲二高级材质</div>
+                <div class="g-card-desc">利用 Blender 节点编辑器优化赛璐璐阴影，实现 3D 空间下的手绘质感。</div>
+            </div>
+        </div>
+
+        <div class="g-card" data-category="scene" onclick="openLightbox('pic/scene/教室.png')">
+            <div class="img-container">
+                <img src="pic/scene/教室.png" alt="教室">
+            </div>
+            <div class="g-card-content">
+                <div class="g-card-label" style="color: var(--g-green);">Stylized</div>
+                <div class="g-card-title">校园全场景：氛围渲染</div>
+                <div class="g-card-desc">模拟午后自然光入射效果，结合资产建模展示全流程场景构建能力。</div>
+            </div>
+        </div>
+        
+        <div class="g-card" data-category="product" onclick="openLightbox('pic/product/ 1.png')">
+            <div class="img-container">
+                <img src="pic/product/ 1.png" alt="指甲钳">
+            </div>
+            <div class="g-card-content">
+                <div class="g-card-label" style="color: var(--g-green);">电商写实</div>
+                <div class="g-card-title">物品渲染 - 指甲钳</div>
+            </div>
+        </div>
+
+        <div class="g-card" data-category="product" onclick="openLightbox('pic/product/5.png')">
+            <div class="img-container">
+                <img src="pic/product/5.png" alt="刀">
+            </div>
+            <div class="g-card-content">
+                <div class="g-card-label" style="color: var(--g-green);">电商写实</div>
+                <div class="g-card-title">物品渲染 - 短刀</div>
+            </div>
+        </div>
+
+        <div class="g-card" data-category="product" onclick="openLightbox('pic/product/7.png')">
+            <div class="img-container">
+                <img src="pic/product/7.png" alt="筋膜枪">
+            </div>
+            <div class="g-card-content">
+                <div class="g-card-label" style="color: var(--g-green);">电商写实</div>
+                <div class="g-card-title">物品渲染 - 筋膜枪</div>
+            </div>
+        </div>
+
+        <div class="g-card" data-category="character" onclick="openLightbox('pic/character/13.png')">
+            <div class="img-container">
+                <img src="pic/character/13.png" alt="博人">
+            </div>
+            <div class="g-card-content">
+                <div class="g-card-label" style="color: var(--g-red);">Characters</div>
+                <div class="g-card-title">博人 三渲二</div>
+                <div class="g-card-desc">利用 Blender 节点编辑器优化赛璐璐阴影，实现 3D 空间下的手绘质感。</div>
+            </div>
+        </div>
+
+        <div class="g-card" data-category="scene" onclick="openLightbox('pic/scene/12.png')">
+            <div class="img-container">
+                <img src="pic/scene/12.png" alt="油画风">
+            </div>
+            <div class="g-card-content">
+                <div class="g-card-label" style="color: var(--g-green);">Stylized</div>
+                <div class="g-card-title">风格化</div>
+                <div class="g-card-desc"></div>
+            </div>
+        </div>
+
+        <div class="g-card" data-category="scene" onclick="openLightbox('pic/scene/楼1.png')">
+            <div class="img-container">
+                <img src="pic/scene/楼1.png" alt="天际线">
+            </div>
+            <div class="g-card-content">
+                <div class="g-card-label" style="color: var(--g-green);">Stylized</div>
+                <div class="g-card-title">天际线</div>
+                <div class="g-card-desc"></div>
+            </div>
+        </div>
+
+        <div class="g-card" data-category="character" onclick="openLightbox('pic/character/hp.png')">
+            <div class="img-container">
+                <img src="pic/character/hp.png" alt="henpri">
+            </div>
+            <div class="g-card-content">
+                <div class="g-card-label" style="color: var(--g-red);">Characters</div>
+                <div class="g-card-title">henpri人物 三渲二</div>
+                <div class="g-card-desc"></div>
+            </div>
+        </div>
+
+        <div class="g-card" data-category="product" onclick="openLightbox('pic/product/ 4.png')">
+            <div class="img-container">
+                <img src="pic/product/ 4.png" alt="锅">
+            </div>
+            <div class="g-card-content">
+                <div class="g-card-label" style="color: var(--g-green);">电商写实</div>
+                <div class="g-card-title">物品渲染 - 锅</div>
+            </div>
+        </div>
+
+        <div class="g-card" data-category="product" onclick="openLightbox('pic/product/8.png')">
+            <div class="img-container">
+                <img src="pic/product/8.png" alt="风扇">
+            </div>
+            <div class="g-card-content">
+                <div class="g-card-label" style="color: var(--g-green);">电商写实</div>
+                <div class="g-card-title">物品渲染 - 风扇</div>
+            </div>
+        </div>
+
+        <div class="g-card" data-category="product" onclick="openLightbox('pic/product/ 3.jpg')">
+            <div class="img-container">
+                <img src="pic/product/ 3.jpg" alt="锅铲">
+            </div>
+            <div class="g-card-content">
+                <div class="g-card-label" style="color: var(--g-green);">电商写实</div>
+                <div class="g-card-title">物品渲染 - 锅铲</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="lightbox" class="lightbox" onclick="closeLightbox()">
+    <div class="close-btn">&times;</div>
+    <img id="lightbox-img" class="lightbox-content" src="" alt="预览图">
+</div>
+
+<footer>
+    <p style="color: #70757a; font-size: 12px; letter-spacing: 0.3px;">© 我的作品集网页 </p>
+</footer>
+
+<script>
+    // 打开预览
+    function openLightbox(src) {
+        const lightbox = document.getElementById('lightbox');
+        const lbImg = document.getElementById('lightbox-img');
+        
+        lbImg.src = src;
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden'; // 禁止背景滚动
+    }
+
+    // 关闭预览
+    function closeLightbox() {
+        const lightbox = document.getElementById('lightbox');
+        lightbox.classList.remove('active');
+        document.body.style.overflow = 'auto'; // 恢复滚动
+    }
+
+    // 键盘支持（按 ESC 键关闭）
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeLightbox();
+    });
+
+    // 简单的筛选逻辑 demo
+    const pills = document.querySelectorAll('.pill');
+    pills.forEach(pill => {
+        pill.addEventListener('click', function() {
+            pills.forEach(p => p.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+
+    document.querySelectorAll('.pill').forEach(pill => {
+    pill.addEventListener('click', function() {
+        // 1. 切换按钮激活状态
+        document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+        this.classList.add('active');
+
+        // 2. 获取筛选目标
+        const filterValue = this.getAttribute('data-filter');
+        const cards = document.querySelectorAll('.g-card');
+
+        // 3. 执行筛选动画
+        cards.forEach(card => {
+            const cardCategory = card.getAttribute('data-category');
+            
+            if (filterValue === 'all' || filterValue === cardCategory) {
+                card.style.display = 'block'; // 显示匹配项
+                setTimeout(() => { card.style.opacity = '1'; card.style.transform = 'scale(1)'; }, 10);
+            } else {
+                card.style.opacity = '0'; // 隐藏非匹配项
+                card.style.transform = 'scale(0.8)';
+                setTimeout(() => { card.style.display = 'none'; }, 300); // 等待动画结束后移除占位
+            }
+        });
+    });
+});
+</script>
+
+</body>
+</html>
